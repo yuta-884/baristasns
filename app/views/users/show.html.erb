@@ -1,0 +1,35 @@
+<div class="row">
+  <div class="col-sm-4 offset-sm-2">
+    <% if @user.avatar.attached? %>
+      <%= image_tag @user.icon, class: "rounded-circle" %>
+    <% else %>
+      <i class="fas fa-user-circle fa-7x"></i>
+    <% end %>
+    <%= @user.name %>
+  </div>
+  <div class="col-sm-4">
+    <ul class="nav justify-content-end">
+      <li class="nav-item"><a href="#" class="nav-link">フォロー</a></li>
+      <li class="nav-item"><a href="#" class="nav-link">フォロワー</a></li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div>
+    <%if @user.profile? %>
+      <%= @user.profile %>
+    <% end %>
+  </div>
+  <div>
+    <% if @user.sns? %>
+      <%= link_to "SNS", @user.sns %>
+    <% end %>
+  </div>
+</div>
+<div class="row">
+  <div class="col-sm-8 offset-sm-2 btn-group d-flex" role="group">
+    <button type="button" class="btn btn-dark">プロフィール編集</button>
+    <button type="button" class="btn btn-dark">メッセージ作成</button>
+    <button type="button" class="btn btn-dark">投稿作成</button>
+  </div>
+</div>
