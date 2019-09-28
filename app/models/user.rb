@@ -7,13 +7,27 @@ class User < ApplicationRecord
   has_secure_password
   has_one_attached :avatar
   
+  
+  has_many :from_messages, class_name: "Message", foreign_key: "from_id", dependent: :destroy
+  has_many :sent_messages, through: :from_messages, source: :from
+  has_many :to_messages, class_name: "Message", foreign_key: "to_id", dependent: :destroy
+  has_many :received_messages, through: :to_messages, source: :to
+  
   scope :baristas, -> { where(kind: true).order(id: :desc) }
   
   def thumbnail
-    return self.avatar.variant(gravity: "center", crop: "200x200+0+0", resize: "100x100+0+0").processed
+    return self.avatar.variant(combine_options:{resize: "95x95^", crop: "95x95+0+0", gravity: :center}).processed
   end
   
   def icon
-    return self.avatar.variant(gravity: "center", crop: "300x300+0+0", resize: "200x200+0+0").processed
+    return self.avatar.variant(combine_options:{resize: "160x160^", crop: "160x160+0+0", gravity: :center}).processed
+  end
+  
+  def forpost
+    return self.avatar.variant(combine_options:{resize: "50x50^", crop: "50x50+0+0", gravity: :center}).processed
+  end
+  
+  def send_message(to_id, content)
+    from_messages.create!(to_id: to_id, content: content)
   end
 end

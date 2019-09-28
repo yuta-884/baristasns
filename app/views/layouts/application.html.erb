@@ -21,8 +21,10 @@
     <%= render 'layouts/navbar' %>
 
     <div class="container">
-      <%= render 'layouts/flash_messages' %>
-
+      <div class="row">
+        <%= render 'layouts/flash_messages' %>
+      </div>
+      
       <%= yield %>
     </div>
   </body>

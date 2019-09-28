@@ -1,2 +1,31 @@
-<h1>Users#edit</h1>
-<p>Find me in app/views/users/edit.html.erb</p>
+<div class="text-center">
+  <h1>プロフィール編集</h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-6 offset-sm-3">
+    
+    <%= form_with(model: @user, local: true) do |f| %>
+      <%= render "layouts/error_messages", model: f.object %>
+      
+      <div class="form-group">
+        <%= f.label :avatar, "プロフィール写真" %>
+        <%= f.file_field :avatar, class: "form-control-file" %>
+      </div>
+      
+      <div class="form-group">
+        <%= f.label :profile, "自己紹介" %>
+        <%= f.text_area :profile, class: "form-control" %>
+      </div>
+        
+      <div class="form-group">
+        <%= f.label :sns, "Webサイト/SNS" %>
+        <%= f.text_field :sns, class: "form-control" %>
+      </div>
+      
+      <%= f.submit "変更する", class: "btn btn-primary btn-block" %>
+    <% end %>
+    
+    <%= link_to "マイページに戻る", @user %>
+  </div>
+</div>

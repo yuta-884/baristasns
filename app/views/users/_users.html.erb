@@ -1,34 +1,33 @@
 <% if users.any? %>
-  <ul class="list-unstyled">
+  <div class="list-unstyled list-group">
     <% users.each do |user| %>
-      <li class="media">
-        <% if user.avatar %>
-          <%= image_tag user.thumbnail, class: "rounded-circle" %>
-        <% else %>
-          <i class="fas fa-user-circle fa-5x"></i>
-        <% end %>
-        <div class="media-body">
-          <div>
-            <%= user.name %>
+      <a class="list-group-item list-group-item-action d-flex" href="<%= user_path(user) %>">
+        <div class="mr-2">
+          <% if user.avatar.attached? %>
+            <%= image_tag user.thumbnail, class: "rounded-circle" %>
+          <% else %>
+            <i class="fas fa-user-circle fa-6x"></i>
+          <% end %>
+        </div>
+        <div>
+          <div class="d-flex">
+            <div>
+              <%= user.name %>
+            </div>
+            <div>
+              <% if user.kind %>
+                <span class="badge badge-secondary ml-2">バリスタ</span>
+              <% else %>
+                <span class="badge badge-secondary ml-2">ユーザ</span>
+              <% end %>
+            </div>
           </div>
-          <div>
-            <% if user.kind %>
-              <p>バリスタ</p>
-            <% else %>
-              <p>ユーザ</p>
-            <% end %>
-          </div>
-          <div>
-            <p><%= link_to user.profile, user_path(user) %></p>
-          </div>
-          <div>
-            <% if user.sns? %>
-              <%= link_to "SNS", user.sns %>
-            <% end %>
+          <div class="mt-2">
+            <%= simple_format user.profile %>
           </div>
         </div>
-      </li>
+      </a>
     <% end %>
-  </ul>
+  </div>
   <%= paginate users %>
 <% end %>

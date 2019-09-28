@@ -1,0 +1,60 @@
+<div class="list-group col-10 offset-1">
+  <% messages.each do |message| %>
+    <div class="list-group-item rounded row my-2 ml-2 mr-n1">
+      <div class="col d-flex">
+        <div>
+          <% if message.from.avatar.attached? %>
+            <%= image_tag message.from.forpost, class: "rounded-circle" %>
+          <% else %>
+            <i class="fas fa-user-circle fa-6x"></i>
+          <% end %>
+        </div>
+        <div class="d-flex align-items-center ml-2">
+          <div>
+            <%= message.from.name %>
+          </div>
+          <div>
+            <% if message.from.kind %>
+              <span class="badge badge-secondary ml-2">バリスタ</span>
+            <% else %>
+              <span class="badge badge-secondary ml-2">ユーザ</span>
+            <% end %>
+          </div>
+        </div>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <div class="d-flex align-items-center mr-2">
+          <div>
+            <%= message.to.name %>
+          </div>
+          <div>
+            <% if message.to.kind %>
+              <span class="badge badge-secondary ml-2">バリスタ</span>
+            <% else %>
+              <span class="badge badge-secondary ml-2">ユーザ</span>
+            <% end %>
+          </div>
+        </div>
+        <div>
+          <% if message.to.avatar.attached? %>
+            <%= image_tag message.to.forpost, class: "rounded-circle" %>
+          <% else %>
+            <i class="fas fa-user-circle fa-3x"></i>
+          <% end %>
+        </div>
+      </div>
+      <div class="col row mt-3 mb-n2">
+        <div class="col">
+          <p><%= message.content %></p>
+        </div>
+        <div>
+          <% if current_user == message.from %>
+            <%= link_to message, method: :delete, data: { confirm: "削除しますか？" }, class: 'text-dark d-flex justify-content-end' do %>
+              <i class="fas fa-trash-alt"></i>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+</div>
