@@ -7,11 +7,15 @@ class User < ApplicationRecord
   has_secure_password
   has_one_attached :avatar
   
+  has_many :relationships
+  has_many :followings, through: :relationships, source: :follow
+  has_many :reverses_of_relationship, class_name: "Relationship", foreign_key: "follow_id"
+  has_many :followers, through: :reverses_of_relationship, source: :user
   
   has_many :from_messages, class_name: "Message", foreign_key: "from_id", dependent: :destroy
-  has_many :sent_messages, through: :from_messages, source: :from
+  has_many :sent_messages, through: :from_messages, source: :to
   has_many :to_messages, class_name: "Message", foreign_key: "to_id", dependent: :destroy
-  has_many :received_messages, through: :to_messages, source: :to
+  has_many :received_messages, through: :to_messages, source: :from
   
   scope :baristas, -> { where(kind: true).order(id: :desc) }
   
@@ -29,5 +33,20 @@ class User < ApplicationRecord
   
   def send_message(to_id, content)
     from_messages.create!(to_id: to_id, content: content)
+  end
+  
+  def follow(other_user)
+    unless self == other_user
+      self.relationships.find_or_create_by(follow_id: other_user.id)
+    end
+  end
+  
+  def unfollow(other_user)
+    relationship = self.relationships.find_by(follow_id: other_user.id)
+    relationship.destroy if relationship
+  end
+  
+  def following?(other_user)
+    self.followings.include?(other_user)
   end
 end

@@ -54,5 +54,11 @@
     </div>
   <% end %>
   
-  <%= render "messages/messages", messages: @messages %>
+  <div class="col-10 offset-1">
+    <ul class="nav nav-tabs nav-justified mb-3">
+      <li class="nav-item"><a href="<%= followings_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(followings_user_path(@user)) %>">フォロー</a></li>
+      <li class="nav-item"><a href="<%= followers_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(followers_user_path(@user)) %>">フォロワー</a></li>
+    </ul>
+    <%= render "users", users: @followers %>
+  </div>
 </div>

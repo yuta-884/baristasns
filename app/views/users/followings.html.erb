@@ -14,8 +14,8 @@
   <div class="col-5">
     <div class="d-flex justify-content-end">
       <ul class="nav row">
-        <li class="nav-item"><a href="<%= followings_user_path(@user) %>" class="nav-link">フォロー <span class="badge badge-secondary"><%= @count_followings %></span></a></li>
-        <li class="nav-item"><a href="<%= followers_user_path(@user) %>" class="nav-link">フォロワー <span class="badge badge-secondary"><%= @count_followers %></span></a></li>
+        <li class="nav-item"><a href="<%= followings_user_path(@user) %>" class="nav-link">フォロー <span class="badge badge-secondary"><%= @count_followings %></a></li>
+        <li class="nav-item"><a href="<%= followers_user_path(@user) %>" class="nav-link">フォロワー <span class="badge badge-secondary"><%= @count_followers %></a></li>
         <%= render "relationships/follow_button", user: @user %>
       </ul>
     </div>
@@ -54,5 +54,11 @@
     </div>
   <% end %>
   
-  <%= render "messages/messages", messages: @messages %>
+  <div class="col-10 offset-1">
+    <ul class="nav nav-tabs nav-justified mb-3">
+      <li class="nav-item"><a href="<%= followings_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(followings_user_path(@user)) %>">フォロー</a></li>
+      <li class="nav-item"><a href="<%= followers_user_path(@user) %>" class="nav-link <%= 'active' if current_page?(followers_user_path(@user)) %>">フォロワー</a></li>
+    </ul>
+    <%= render "users", users: @followings %>
+  </div>
 </div>

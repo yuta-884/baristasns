@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :require_user_logged_in, only: [:show, :edit]
+  before_action :require_user_logged_in, only: [:show, :edit, :followings, :followers]
   
   def index
     @users = User.baristas.page(params[:page]).per(10)
@@ -9,6 +9,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @message = Message.new
     @messages = Message.user_recent(@user.id)
+    counts(@user)
   end
 
   def new
@@ -46,6 +47,20 @@ class UsersController < ApplicationController
       flash.now[:danger] = "ユーザ情報が更新されませんでした"
       render :edit
     end
+  end
+  
+  def followings
+    @user = User.find(params[:id])
+    @message = Message.new
+    @followings = @user.followings.page(params[:page])
+    counts(@user)
+  end
+  
+  def followers
+    @user = User.find(params[:id])
+    @message = Message.new
+    @followers = @user.followers.page(params[:page])
+    counts(@user)
   end
   
   private
