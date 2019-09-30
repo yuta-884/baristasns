@@ -49,4 +49,12 @@ class User < ApplicationRecord
   def following?(other_user)
     self.followings.include?(other_user)
   end
+  
+  def feed_messages
+    Message.where(from_id: self.following_ids + [self.id])
+  end
+  
+  def user_recent
+    Message.where(from_id: [self.id]).last(250)+Message.where(to_id: [self.id]).last(250)
+  end
 end

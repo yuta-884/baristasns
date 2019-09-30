@@ -1,33 +1,38 @@
 <div class="row">
-  <div class="col-5 offset-1">
+  <div class="col-lg-5 offset-lg-1 col-4">
     <% if @user.avatar.attached? %>
       <%= image_tag @user.icon, class: "rounded-circle" %>
     <% else %>
       <i class="fas fa-user-circle fa-10x"></i>
     <% end %>
   </div>
-  <div class="col-5">
+  <div class="col-lg-5 col-8">
     <ul class="nav row justify-content-end">
       <li class="nav-item">
-        <a class="nav-link text-dark flex-column text-decoration-none" href="<%= followings_user_path(@user) %>">
-          <div class="text-center"><%= @count_followings %></div><div>フォロー</div>
+        <a class="nav-link text-dark flex-column text-decoration-none user-navi" href="<%= user_path(@user) %>">
+          <div class="text-center"><%= @count_messages %></div><div>メッセージ</div>
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link text-dark flex-column text-decoration-none" href="<%= followers_user_path(@user) %>">
+        <a class="nav-link text-dark flex-column text-decoration-none user-navi" href="<%= followers_user_path(@user) %>">
           <div class="text-center"><%= @count_followers %></div><div>フォロワー</div>
+        </a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link text-dark flex-column text-decoration-none user-navi" href="<%= followings_user_path(@user) %>">
+          <div class="text-center"><%= @count_followings %></div><div>フォロー</div>
         </a>
       </li>
     </ul>
     <div class="row">
-      <div class="col-md-6 offset-md-6">
+      <div class="col-6 offset-6">
         <%= render "relationships/follow_button", user: @user %>
       </div>
     </div>
   </div>
 </div>
 <div class="row">
-  <div class="col-10 offset-1 flex-column">
+  <div class="col-lg-10 offset-lg-1 col-12 flex-column">
     <div class="my-2 ml-1">
       <strong><%= @user.name %></strong>
     </div>
@@ -43,13 +48,13 @@
     </div>
   </div>
   <% if current_user == @user %>
-    <div class="col-10 offset-1 btn-group d-flex mb-3" role="group">
+    <div class="col-lg-10 offset-lg-1 col-12 btn-group d-flex mb-3" role="group">
       <button type="button" class="btn btn-dark btn-block"><%=link_to "プロフィール編集", edit_user_path, class: "text-light text-decoration-none" %></button>
       <!--<button type="button" class="btn btn-dark">メッセージ作成</button>-->
       <!--<button type="button" class="btn btn-dark">投稿作成</button>-->
     </div>
   <% else %>
-    <div class="col-10 offset-1">
+    <div class="col-lg-10 offset-lg-1 col-12">
       <%= form_with(model: @message, local: true) do |f| %>
         <%= render "layouts/error_messages", model: f.object %>
           
@@ -64,10 +69,10 @@
     </div>
   <% end %>
   
-  <div class="col-10 offset-1">
+  <div class="col-lg-10 offset-lg-1 col-12">
     <ul class="nav nav-tabs nav-justified mb-3">
-      <li class="nav-item"><a href="<%= followings_user_path(@user) %>" class="nav-link text-dark text-decoration-none <%= 'active' if current_page?(followings_user_path(@user)) %>">フォロー</a></li>
       <li class="nav-item"><a href="<%= followers_user_path(@user) %>" class="nav-link text-dark text-decoration-none <%= 'active' if current_page?(followers_user_path(@user)) %>">フォロワー</a></li>
+      <li class="nav-item"><a href="<%= followings_user_path(@user) %>" class="nav-link text-dark text-decoration-none <%= 'active' if current_page?(followings_user_path(@user)) %>">フォロー</a></li>
     </ul>
     <%= render "users", users: @followings %>
   </div>
