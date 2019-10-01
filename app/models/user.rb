@@ -24,7 +24,7 @@ class User < ApplicationRecord
   end
   
   def icon
-    return self.avatar.variant(combine_options:{resize: "160x160^", crop: "160x160+0+0", gravity: :center}).processed
+    return self.avatar.variant(combine_options:{resize: "140x140^", crop: "140x140+0+0", gravity: :center}).processed
   end
   
   def forpost
