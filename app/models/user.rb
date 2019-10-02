@@ -24,11 +24,11 @@ class User < ApplicationRecord
   end
   
   def icon
-    return self.avatar.variant(combine_options:{resize: "140x140^", crop: "140x140+0+0", gravity: :center}).processed
+    return self.avatar.variant(combine_options:{resize: "125x125^", crop: "125x125+0+0", gravity: :center}).processed
   end
   
   def forpost
-    return self.avatar.variant(combine_options:{resize: "50x50^", crop: "50x50+0+0", gravity: :center}).processed
+    return self.avatar.variant(combine_options:{resize: "35x35^", crop: "35x35+0+0", gravity: :center}).processed
   end
   
   def send_message(to_id, content)

@@ -1,15 +1,15 @@
 <div class="list-group col-lg-10 offset-lg-1 col-12">
   <% messages.each do |message| %>
-    <div class="list-group-item rounded row my-2 ml-2 mr-n1">
-      <div class="col d-flex">
-        <div>
-          <a href="<%= user_path(message.from) %>">
+    <div class="list-group-item rounded my-2 ml-2 mr-n1">
+      <a class="row d-flex text-dark text-decoration-none" href="<%= user_path(message.from) %>">
+        <div class="ml-3">
+          <div>
             <% if message.from.avatar.attached? %>
               <%= image_tag message.from.forpost, class: "rounded-circle" %>
             <% else %>
-              <i class="fas fa-user-circle fa-6x"></i>
+              <i class="fas fa-user-circle fa-3x"></i>
             <% end %>
-          </a>
+          </div>
         </div>
         <div class="d-flex align-items-center ml-2">
           <div>
@@ -23,8 +23,8 @@
             <% end %>
           </div>
         </div>
-      </div>
-      <div class="col d-flex justify-content-end">
+      </a>
+      <a class="row justify-content-end text-dark text-decoration-none" href="<%= user_path(message.to) %>">
         <div class="d-flex align-items-center mr-2">
           <div>
             <%= message.to.name %>
@@ -37,23 +37,26 @@
             <% end %>
           </div>
         </div>
-        <div>
-          <a href="<%= user_path(message.to) %>">
+        <div class="mr-3">
+          <div>
             <% if message.to.avatar.attached? %>
               <%= image_tag message.to.forpost, class: "rounded-circle" %>
             <% else %>
               <i class="fas fa-user-circle fa-3x text-dark"></i>
             <% end %>
-          </a>
+          </div>
         </div>
+      </a>
+      <div class="mt-1">
+        <%= message.content %>
       </div>
-      <div class="col row mt-3 mb-n2">
-        <div class="col">
-          <p><%= message.content %></p>
-        </div>
+      <div class="d-flex justify-content-end">
         <div>
+          <%= message.created_at.strftime("%Y-%m-%d %H:%M") %>
+        </div>
+        <div class="ml-2">
           <% if current_user == message.from %>
-            <%= link_to message, method: :delete, data: { confirm: "削除しますか？" }, class: 'text-dark d-flex justify-content-end' do %>
+            <%= link_to message, method: :delete, data: { confirm: "削除しますか？" }, class: 'text-dark justify-content-end' do %>
               <i class="fas fa-trash-alt"></i>
             <% end %>
           <% end %>

@@ -1,6 +1,6 @@
 class MessagesController < ApplicationController
   before_action :require_user_logged_in
-  before_action :currect_user, only: [:destroy]
+  before_action :correct_user, only: [:destroy]
   
   def create
     @message = current_user.from_messages.build(message_params)
@@ -9,7 +9,7 @@ class MessagesController < ApplicationController
       redirect_back(fallback_location: root_path)
     else
       @user = User.find(@message.to_id)
-      @messages = Message.user_recent(@user.id)
+      @messages = @user.user_recent
       flash[:danger] = "メッセージの作成に失敗しました"
       redirect_to @user
     end
@@ -30,7 +30,7 @@ class MessagesController < ApplicationController
   def correct_user
     @message = current_user.from_messages.find_by(id: params[:id])
     unless @message
-      redirect_to current_user
+      redirect_to user_url(current_user)
     end
   end
 end
