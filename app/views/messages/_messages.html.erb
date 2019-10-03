@@ -48,7 +48,7 @@
             </div>
           </div>
         </a>
-        <div class="mt-1">
+        <div class="mt-1 balloon-left">
           <%= message.content %>
         </div>
         <div class="d-flex justify-content-end">
@@ -64,7 +64,7 @@
           </div>
         </div>
         <% message.replies.reorder(id: :asc).each do |message_reply| %>
-          <div class="my-1 <%= "d-flex justify-content-end" if message.to == message_reply.from %>">
+          <div class="my-1 <%= message.to == message_reply.from ? "d-flex justify-content-end balloon-right" : "balloon-left" %>">
             <%= message_reply.content %>
           </div>
           <div class="d-flex justify-content-end">

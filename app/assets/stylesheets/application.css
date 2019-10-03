@@ -13,6 +13,7 @@
  *= require_tree .
  *= require_self
  */
+
 @media screen and (max-width: 480px) {
   .user-navi {
     font-size: 0.7em;
