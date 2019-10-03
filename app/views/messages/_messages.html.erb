@@ -91,7 +91,7 @@
               <%= form_with(model: @message, local: true) do |f| %>
                 <%= render "layouts/error_messages", model: f.object %>
                   
-                <%= f.hidden_field :to_id, :value => message.from_id %>
+                <%= f.hidden_field :to_id, :value => current_user.id == message.from_id ? message.to_id : message.from_id %>
                 <%= f.hidden_field :reply_id, :value => message.id %>
                   
                 <div class="form-group">

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :require_user_logged_in, only: [:show, :edit, :followings, :followers]
+  before_action :authenticate_user, only: :edit
   
   def index
     @users = User.baristas.page(params[:page]).per(10)
@@ -67,5 +68,12 @@ class UsersController < ApplicationController
   
   def user_params
     params.fetch(:user, {}).permit(:name, :email, :password, :password_confirmation, :profile, :sns, :kind, :avatar)
+  end
+  
+  def authenticate_user
+    @user = User.find(params[:id])
+    unless @current_user == @user
+      redirect_to root_url
+    end
   end
 end
