@@ -24,7 +24,7 @@ class MessagesController < ApplicationController
   private
   
   def message_params
-    params.require(:message).permit(:to_id, :content)
+    params.require(:message).permit(:to_id, :content, :reply_id)
   end
   
   def correct_user

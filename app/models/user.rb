@@ -51,10 +51,10 @@ class User < ApplicationRecord
   end
   
   def feed_messages
-    Message.where(from_id: self.following_ids + [self.id])
+    Message.where(from_id: self.following_ids + [self.id]).or(Message.where(to_id: [self.id]))
   end
   
   def user_recent
-    Message.where(from_id: [self.id]).last(250)+Message.where(to_id: [self.id]).last(250)
+    Message.where("from_id = ? or to_id = ?", [self.id], [self.id]).last(250)
   end
 end

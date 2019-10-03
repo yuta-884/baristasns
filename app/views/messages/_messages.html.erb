@@ -1,67 +1,111 @@
 <div class="list-group col-lg-10 offset-lg-1 col-12">
   <% messages.each do |message| %>
-    <div class="list-group-item rounded my-2 ml-2 mr-n1">
-      <a class="row d-flex text-dark text-decoration-none" href="<%= user_path(message.from) %>">
-        <div class="ml-3">
-          <div>
-            <% if message.from.avatar.attached? %>
-              <%= image_tag message.from.forpost, class: "rounded-circle" %>
-            <% else %>
-              <i class="fas fa-user-circle fa-3x"></i>
+    <% if message.reply_id == nil %>
+      <div class="list-group-item rounded my-2 ml-2 mr-n1">
+        <a class="row d-flex text-dark text-decoration-none" href="<%= user_path(message.from) %>">
+          <div class="ml-3">
+            <div>
+              <% if message.from.avatar.attached? %>
+                <%= image_tag message.from.forpost, class: "rounded-circle" %>
+              <% else %>
+                <i class="fas fa-user-circle fa-2x"></i>
+              <% end %>
+            </div>
+          </div>
+          <div class="d-flex align-items-center ml-2">
+            <div>
+              <%= message.from.name %>
+            </div>
+            <div>
+              <% if message.from.kind %>
+                <span class="badge badge-secondary ml-2">バリスタ</span>
+              <% else %>
+                <span class="badge badge-secondary ml-2">ユーザ</span>
+              <% end %>
+            </div>
+          </div>
+        </a>
+        <a class="row justify-content-end text-dark text-decoration-none" href="<%= user_path(message.to) %>">
+          <div class="d-flex align-items-center mr-2">
+            <div>
+              <%= message.to.name %>
+            </div>
+            <div>
+              <% if message.to.kind %>
+                <span class="badge badge-secondary ml-2">バリスタ</span>
+              <% else %>
+                <span class="badge badge-secondary ml-2">ユーザ</span>
+              <% end %>
+            </div>
+          </div>
+          <div class="mr-3">
+            <div>
+              <% if message.to.avatar.attached? %>
+                <%= image_tag message.to.forpost, class: "rounded-circle" %>
+              <% else %>
+                <i class="fas fa-user-circle fa-2x text-dark"></i>
+              <% end %>
+            </div>
+          </div>
+        </a>
+        <div class="mt-1">
+          <%= message.content %>
+        </div>
+        <div class="d-flex justify-content-end">
+          <div class="mr-2">
+            <% if current_user == message.from %>
+              <%= link_to message, method: :delete, data: { confirm: "削除しますか？" }, class: 'text-dark justify-content-end' do %>
+                <i class="fas fa-trash-alt"></i>
+              <% end %>
             <% end %>
           </div>
-        </div>
-        <div class="d-flex align-items-center ml-2">
           <div>
-            <%= message.from.name %>
-          </div>
-          <div>
-            <% if message.from.kind %>
-              <span class="badge badge-secondary ml-2">バリスタ</span>
-            <% else %>
-              <span class="badge badge-secondary ml-2">ユーザ</span>
-            <% end %>
+            <%= message.created_at.strftime("%Y-%m-%d %H:%M") %>
           </div>
         </div>
-      </a>
-      <a class="row justify-content-end text-dark text-decoration-none" href="<%= user_path(message.to) %>">
-        <div class="d-flex align-items-center mr-2">
-          <div>
-            <%= message.to.name %>
+        <% message.replies.reorder(id: :asc).each do |message_reply| %>
+          <div class="my-1 <%= "d-flex justify-content-end" if message.to == message_reply.from %>">
+            <%= message_reply.content %>
           </div>
-          <div>
-            <% if message.to.kind %>
-              <span class="badge badge-secondary ml-2">バリスタ</span>
-            <% else %>
-              <span class="badge badge-secondary ml-2">ユーザ</span>
-            <% end %>
+          <div class="d-flex justify-content-end">
+            <div class="mr-2">
+              <% if current_user == message_reply.from %>
+                <%= link_to message_reply, method: :delete, data: { confirm: "削除しますか？" }, class: 'text-dark justify-content-end' do %>
+                  <i class="fas fa-trash-alt"></i>
+                <% end %>
+              <% end %>
+            </div>
+            <div>
+              <%= message_reply.created_at.strftime("%Y-%m-%d %H:%M") %>
+            </div>
           </div>
-        </div>
-        <div class="mr-3">
-          <div>
-            <% if message.to.avatar.attached? %>
-              <%= image_tag message.to.forpost, class: "rounded-circle" %>
-            <% else %>
-              <i class="fas fa-user-circle fa-3x text-dark"></i>
-            <% end %>
+        <% end %>
+        <%if current_user == message.from || current_user == message.to %>
+          <p>
+            <a role="button" class="btn btn-sm" data-toggle="collapse" href="#replyForm<%= message.id %>" aria-expanded="false" aria-controls="replyForm">
+              <!--<% if current_user == message.from %>追記する<% end %>-->
+              <!--<% if current_user == message.to %>返信する<% end %>-->
+              <i class="fas fa-chevron-down mr-1"></i>返信する
+            </a>
+          </p>
+          <div class="row collapse" id="replyForm<%= message.id %>">
+            <div class="col-12">
+              <%= form_with(model: @message, local: true) do |f| %>
+                <%= render "layouts/error_messages", model: f.object %>
+                  
+                <%= f.hidden_field :to_id, :value => message.from_id %>
+                <%= f.hidden_field :reply_id, :value => message.id %>
+                  
+                <div class="form-group">
+                  <%= f.text_area :content, class: "form-control" %>
+                </div>
+                  
+                <%= f.submit "送信", class: "btn btn-primary btn-block" %>
+              <% end %>
+            </div>
           </div>
-        </div>
-      </a>
-      <div class="mt-1">
-        <%= message.content %>
+        <% end %>
       </div>
-      <div class="d-flex justify-content-end">
-        <div>
-          <%= message.created_at.strftime("%Y-%m-%d %H:%M") %>
-        </div>
-        <div class="ml-2">
-          <% if current_user == message.from %>
-            <%= link_to message, method: :delete, data: { confirm: "削除しますか？" }, class: 'text-dark justify-content-end' do %>
-              <i class="fas fa-trash-alt"></i>
-            <% end %>
-          <% end %>
-        </div>
-      </div>
-    </div>
+    <% end %>
   <% end %>
 </div>

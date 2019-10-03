@@ -8,7 +8,7 @@ class UsersController < ApplicationController
   def show
     @user = User.find(params[:id])
     @message = Message.new
-    @messages = current_user.user_recent
+    @messages = @user.user_recent
     counts(@user)
   end
 
