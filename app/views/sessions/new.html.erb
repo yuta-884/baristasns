@@ -16,9 +16,9 @@
         <%= f.password_field :password, class: "form-control" %>
       </div>
       
-      <%= f.submit "ログイン", class: "btn btn-primary btn-block" %>
+      <%= f.submit "ログイン", class: "btn btn-primary btn-block btn-sm" %>
     <% end %>
     
-    <p class="text-right">登録はこちらから <%= link_to "ユーザ登録", signup_path %></p>
+    <p class="text-right">登録はこちらから <%= link_to "ユーザ登録", signup_path, class: "text-decoration-none" %></p>
   </div>
 </div>
