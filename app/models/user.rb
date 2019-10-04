@@ -5,7 +5,7 @@ class User < ApplicationRecord
                     format: { with: /\A[\w+\-.]+@[a-z\d\-.]+\.[a-z]+\z/i },
                     uniqueness: { case_sensitive: false }
   validates :profile, length: {maximum: 150}
-  validates :sns, format: /\A#{URI::regexp(%w(http https))}\z/, length: {maximum: 100}
+  validates :sns, format: /\A#{URI::regexp(%w(http https))}\z/, length: {maximum: 100}, allow_nil: true
                   
   has_secure_password
   has_one_attached :avatar
