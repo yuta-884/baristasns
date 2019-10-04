@@ -73,6 +73,7 @@ class UsersController < ApplicationController
   def authenticate_user
     @user = User.find(params[:id])
     unless @current_user == @user
+      flash[:danger] = "不正なアクセスです"
       redirect_to root_url
     end
   end

@@ -49,34 +49,34 @@
           </div>
         </a>
         <div class="mt-1 balloon-left">
-          <%= message.content %>
+          <%= simple_format(message.content) %>
         </div>
-        <div class="d-flex justify-content-end">
-          <div class="mr-2">
+        <div class="d-flex">
+          <div>
+            <%= message.created_at.strftime("%Y-%m-%d %H:%M") %>
+          </div>
+          <div class="mx-2">
             <% if current_user == message.from %>
               <%= link_to message, method: :delete, data: { confirm: "削除しますか？" }, class: 'text-dark justify-content-end' do %>
                 <i class="fas fa-trash-alt"></i>
               <% end %>
             <% end %>
           </div>
-          <div>
-            <%= message.created_at.strftime("%Y-%m-%d %H:%M") %>
-          </div>
         </div>
         <% message.replies.reorder(id: :asc).each do |message_reply| %>
           <div class="my-1 <%= message.to == message_reply.from ? "d-flex justify-content-end balloon-right" : "balloon-left" %>">
-            <%= message_reply.content %>
+            <%= simple_format(message_reply.content) %>
           </div>
-          <div class="d-flex justify-content-end">
-            <div class="mr-2">
+          <div class="d-flex <%= message.to == message_reply.from ? "flex-row-reverse balloon-right" : "balloon-left" %>">
+            <div>
+              <%= message_reply.created_at.strftime("%Y-%m-%d %H:%M") %>
+            </div>
+            <div class="mx-2">
               <% if current_user == message_reply.from %>
                 <%= link_to message_reply, method: :delete, data: { confirm: "削除しますか？" }, class: 'text-dark justify-content-end' do %>
                   <i class="fas fa-trash-alt"></i>
                 <% end %>
               <% end %>
-            </div>
-            <div>
-              <%= message_reply.created_at.strftime("%Y-%m-%d %H:%M") %>
             </div>
           </div>
         <% end %>
