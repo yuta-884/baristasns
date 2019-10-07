@@ -83,7 +83,7 @@
         <%if current_user == message.from || current_user == message.to %>
           <p>
             <a role="button" class="btn btn-sm" data-toggle="collapse" href="#replyForm<%= message.id %>" aria-expanded="false" aria-controls="replyForm">
-              <i class="fas fa-chevron-down mr-1"></i>このメッセージに送る
+              <i class="fas fa-chevron-down mr-2"></i>このメッセージに送る
             </a>
           </p>
           <div class="row collapse" id="replyForm<%= message.id %>">
