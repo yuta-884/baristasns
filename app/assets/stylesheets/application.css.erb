@@ -13,20 +13,20 @@
  *= require_tree .
  *= require_self
  */
-
-body {
-  background-image: url("<%= asset_url("coffee-2734137_1920.jpg") %>");
-  background-size: cover;
-  background-attachment: fixed;
-  background-position: center;
-}
-
 .topnavi {
   opacity: 0.9;
 }
 
 .jumbotron {
-  background: rgba(255,255,255,0.5);
+  background: url("<%= asset_url("coffee-shop-1209863_1920.jpg")%>") center no-repeat;
+  background-size: cover;
+}
+
+.jumbotron p {
+  text-shadow: 1px 1px 0 #000,
+               -1px 1px 0 #000,
+               1px -1px 0 #000,
+               -1px -1px 0 #000;
 }
 
 @media screen and (max-width: 480px) {
