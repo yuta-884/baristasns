@@ -19,7 +19,7 @@
   ・ページネーション機能(kaminari) </br>
   
   
-  ＜言語・環境＞ </br>
+  ＜言語・環境など＞ </br>
   言語：Ruby, HTML5, CSS3</br>
   開発環境：Cloud9, Linuxコマンド, Heroku, git/GitHub</br>
   データベース：MySQL</br>
