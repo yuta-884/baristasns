@@ -23,9 +23,11 @@ class UsersController < ApplicationController
     if @user.save
       if @user.kind
         flash[:success] = "バリスタとして登録しました"
+        session[:user_id] = @user.id
         redirect_to @user
       else
         flash[:success] = "ユーザとして登録しました"
+        session[:user_id] = @user.id
         redirect_to @user
       end
     else

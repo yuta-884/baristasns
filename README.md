@@ -1,24 +1,25 @@
-# README
+# カフェのバリスタと直接メッセージでやりとりができるSNSアプリケーション
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+# アプリケーションの機能一覧
+  ・ユーザ登録機能
+    (テストユーザ　メールアドレス：test@test.com  パスワード：test1111 )
 
-Things you may want to cover:
+  ・ログイン機能
+  ・ユーザフォロー機能
+  ・ユーザ詳細ページでのメッセージ/フォロー/フォロワー一覧表示機能
+  ・プロフィール画像アップロード機能(Active Storage, S3, MiniMagick)
+  
+  ・バリスタ一覧表示機能
+  
+  ・相手を指定したメッセージ機能
+  ・メッセージに対する返信機能(一対多の自己結合)
+  
+  ・タイムライン表示機能
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+  ・ページネーション機能(kaminari)
+  
+#　環境、言語など
+  言語：Ruby, HTML5, CSS3
+  開発環境：Cloud9, Linuxコマンド, Heroku, git/GitHub
+  データベース：MySQL
+  フレームワーク：Ruby on Rails, Bootstrap
