@@ -3,11 +3,11 @@ class SessionsController < ApplicationController
   end
 
   def create
-    email = params[:session][:email].downcase
-    password = params[:session][:password]
-    if login(email, password)
+    @user = User.find_by(email: params[:session][:email].downcase)
+    if @user && @user.authenticate(params[:session][:password])
+      log_in @user
       flash[:success] = "ログインしました"
-      redirect_to root_url
+      redirect_back_or @user
     else
       flash.now[:danger] = "ログインに失敗しました"
       render :new
@@ -15,20 +15,8 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:user_id] = nil
+    log_out
     flash[:success] = "ログアウトしました"
     redirect_to root_url
-  end
-  
-  private
-  
-  def login(email, password)
-    @user = User.find_by(email: email)
-    if @user && @user.authenticate(password)
-      session[:user_id] = @user.id
-      return true
-    else
-      return false
-    end
   end
 end

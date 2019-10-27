@@ -1,33 +1,26 @@
-<% if users.any? %>
-  <div class="list-unstyled list-group">
-    <% users.each do |user| %>
-      <a class="list-group-item list-group-item-action d-flex" href="<%= user_path(user) %>">
-        <div class="mr-2">
-          <% if user.avatar.attached? %>
-            <%= image_tag user.thumbnail, class: "rounded-circle" %>
-          <% else %>
-            <i class="fas fa-user-circle fa-6x"></i>
-          <% end %>
-        </div>
-        <div>
-          <div class="d-flex">
-            <div>
-              <%= user.name %>
-            </div>
-            <div>
-              <% if user.kind %>
-                <span class="badge badge-secondary ml-2">バリスタ</span>
-              <% else %>
-                <span class="badge badge-secondary ml-2">ユーザ</span>
-              <% end %>
-            </div>
-          </div>
-          <div class="mt-2">
-            <%= user.profile %>
-          </div>
-        </div>
-      </a>
+<a class="list-group-item list-group-item-action d-flex" href="<%= user_path(user) %>">
+  <div class="mr-2">
+    <% if user.avatar.attached? %>
+      <%= image_tag user.thumbnail, class: "rounded-circle" %>
+    <% else %>
+      <i class="fas fa-user-circle fa-6x"></i>
     <% end %>
   </div>
-  <%= paginate users %>
-<% end %>
+  <div>
+    <div class="d-flex">
+      <div>
+        <%= user.name %>
+      </div>
+      <div>
+        <% if user.kind %>
+          <span class="badge badge-secondary ml-2">バリスタ</span>
+        <% else %>
+          <span class="badge badge-secondary ml-2">ユーザー</span>
+        <% end %>
+      </div>
+    </div>
+    <div class="mt-2">
+      <%= user.profile %>
+    </div>
+  </div>
+</a>

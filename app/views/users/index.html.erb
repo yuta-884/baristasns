@@ -1,5 +1,9 @@
+<% provide(:title, "バリスタ") %>
 <div class="text-center">
   <h2>バリスタ</h2>
 </div>
 
-<%= render "users", users: @users %>
+<div class="list-unstyled list-group mb-2">
+  <%= render partial: "users", collection: @users, as: :user %>
+</div>
+<%= paginate @users %>

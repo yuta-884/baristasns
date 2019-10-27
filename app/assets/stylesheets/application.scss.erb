@@ -13,6 +13,11 @@
  *= require_tree .
  *= require_self
  */
+ 
+body {
+  padding-top: 4.5rem;
+}
+
 .topnavi {
   opacity: 0.9;
 }
@@ -20,13 +25,12 @@
 .jumbotron {
   background: url("<%= asset_url("coffee-shop-1209863_1920.jpg")%>") center no-repeat;
   background-size: cover;
-}
-
-.jumbotron p {
-  text-shadow: 1px 1px 0 #000,
-               -1px 1px 0 #000,
-               1px -1px 0 #000,
-               -1px -1px 0 #000;
+  p {
+    text-shadow: 1px 1px 0 #000,
+                 -1px 1px 0 #000,
+                 1px -1px 0 #000,
+                 -1px -1px 0 #000;
+  }
 }
 
 @media screen and (max-width: 480px) {

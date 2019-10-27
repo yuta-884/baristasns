@@ -9,9 +9,10 @@
         <li class="nav-item"><%= link_to "バリスタ一覧", users_path, class: "nav-link" %></li>
       <% if logged_in? %>
         <li class="nav-item"><%= link_to "マイページ", user_path(current_user), class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "プロフィール編集", edit_user_path(current_user), class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "ログアウト", logout_path, method: :delete, class: "nav-link" %></li>
       <% else %>
-        <li class="nav-item"><%= link_to "ユーザ登録", signup_path, class: "nav-link" %></li>
+        <li class="nav-item"><%= link_to "ユーザー登録", signup_path, class: "nav-link" %></li>
         <li class="nav-item"><%= link_to "ログイン", login_path, class: "nav-link" %></li>
       <% end %>
     </ul>
