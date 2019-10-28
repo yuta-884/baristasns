@@ -53,15 +53,20 @@ class User < ApplicationRecord
   end
   
   def following?(other_user)
-    self.followings.include?(other_user)
+    followings.include?(other_user)
   end
   
+  # def feed_messages
+  #   Message.where(from_id: self.following_ids + [self.id]).or(Message.where(to_id: [self.id]))
+  # end
+  
   def feed_messages
-    Message.where(from_id: self.following_ids + [self.id]).or(Message.where(to_id: [self.id]))
+    following_ids = "SELECT follow_id FROM relationships WHERE user_id = :user_id"
+    Message.where("from_id IN (#{following_ids}) OR from_id = :user_id OR to_id = :user_id", user_id: id)
   end
   
   def user_recent
-    Message.where("from_id = ? or to_id = ?", [self.id], [self.id]).last(250)
+    Message.where("from_id = ? OR to_id = ?", id, id)
   end
   
   def User.digest(string)

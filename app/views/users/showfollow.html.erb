@@ -1,0 +1,11 @@
+<div class="row">
+  <%= render 'profile' %>
+  
+  <div class="col-lg-10 offset-lg-1 col-12">
+    <ul class="nav nav-tabs nav-justified my-2">
+      <li class="nav-item"><a href="<%= followers_user_path(@user) %>" class="nav-link text-dark text-decoration-none <%= 'active' if current_page?(followers_user_path(@user)) %>">フォロワー</a></li>
+      <li class="nav-item"><a href="<%= followings_user_path(@user) %>" class="nav-link text-dark text-decoration-none <%= 'active' if current_page?(followings_user_path(@user)) %>">フォロー</a></li>
+    </ul>
+    <%= render partial: "users", collection: @users, as: :user %>
+  </div>
+</div>

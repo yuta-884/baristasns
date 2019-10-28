@@ -2,7 +2,8 @@
   <% messages.each do |message| %>
     <% if message.reply_id == nil %>
       <div class="list-group-item rounded my-2 ml-2 mr-n1">
-        <a class="row d-flex text-dark text-decoration-none" href="<%= user_path(message.from) %>">
+        <a class="row d-flex text-dark text-decoration-none"
+                                    href="<%= user_path(message.from) %>">
           <div class="ml-3">
             <div>
               <% if message.from.avatar.attached? %>
@@ -25,7 +26,8 @@
             </div>
           </div>
         </a>
-        <a class="row justify-content-end text-dark text-decoration-none" href="<%= user_path(message.to) %>">
+        <a class="row justify-content-end text-dark text-decoration-none"
+                                      href="<%= user_path(message.to) %>">
           <div class="d-flex align-items-center mr-2">
             <div>
               <%= message.to.name %>
@@ -57,7 +59,9 @@
           </div>
           <div class="mx-2">
             <% if current_user == message.from %>
-              <%= link_to message, method: :delete, data: { confirm: "削除しますか？" }, class: 'text-dark justify-content-end' do %>
+              <%= link_to message, method: :delete,
+                        data: { confirm: "削除しますか？" },
+                        class: 'text-dark justify-content-end' do %>
                 <i class="fas fa-trash-alt"></i>
               <% end %>
             <% end %>
@@ -73,7 +77,9 @@
             </div>
             <div class="mx-2">
               <% if current_user == message_reply.from %>
-                <%= link_to message_reply, method: :delete, data: { confirm: "削除しますか？" }, class: 'text-dark justify-content-end' do %>
+                <%= link_to message_reply, method: :delete,
+                        data: { confirm: "削除しますか？" },
+                        class: 'text-dark justify-content-end' do %>
                   <i class="fas fa-trash-alt"></i>
                 <% end %>
               <% end %>
@@ -82,7 +88,9 @@
         <% end %>
         <%if current_user == message.from || current_user == message.to %>
           <p>
-            <a role="button" class="btn btn-sm" data-toggle="collapse" href="#replyForm<%= message.id %>" aria-expanded="false" aria-controls="replyForm">
+            <a role="button" class="btn btn-sm" data-toggle="collapse"
+                href="#replyForm<%= message.id %>" aria-expanded="false"
+                aria-controls="replyForm">
               <i class="fas fa-chevron-down mr-2"></i>このメッセージに送る
             </a>
           </p>
@@ -91,7 +99,8 @@
               <%= form_with(model: @message, local: true) do |f| %>
                 <%= render "layouts/error_messages", model: f.object %>
                   
-                <%= f.hidden_field :to_id, :value => current_user.id == message.from_id ? message.to_id : message.from_id %>
+                <%= f.hidden_field :to_id, :value => current_user.id == 
+                            message.from_id ? message.to_id : message.from_id %>
                 <%= f.hidden_field :reply_id, :value => message.id %>
                   
                 <div class="form-group">

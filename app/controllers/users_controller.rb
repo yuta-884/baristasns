@@ -8,7 +8,7 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
-    @message = Message.new
+    @message = current_user.from_messages.build if logged_in?
     @messages = @user.user_recent
     counts(@user)
   end
@@ -47,15 +47,17 @@ class UsersController < ApplicationController
   def followings
     @user = User.find(params[:id])
     @message = Message.new
-    @followings = @user.followings.page(params[:page])
+    @users = @user.followings.page(params[:page])
     counts(@user)
+    render "showfollow"
   end
   
   def followers
     @user = User.find(params[:id])
     @message = Message.new
-    @followers = @user.followers.page(params[:page])
+    @users = @user.followers.page(params[:page])
     counts(@user)
+    render "showfollow"
   end
   
   private

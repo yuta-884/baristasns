@@ -8,10 +8,8 @@ class MessagesController < ApplicationController
       flash[:success] = "メッセージを作成しました"
       redirect_back(fallback_location: root_path)
     else
-      @user = User.find(@message.to_id)
-      @messages = @user.user_recent
       flash[:danger] = "メッセージの作成に失敗しました"
-      redirect_to @user
+      redirect_back(fallback_location: root_path)
     end
   end
 
@@ -29,8 +27,6 @@ class MessagesController < ApplicationController
   
   def correct_user
     @message = current_user.from_messages.find_by(id: params[:id])
-    unless @message
-      redirect_to user_url(current_user)
-    end
+    redirect_back(fallback_location: current_user) if @message.nil?
   end
 end

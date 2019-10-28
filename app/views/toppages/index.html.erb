@@ -1,8 +1,4 @@
-<% if logged_in? %>
-	<div class="row">
-		<%= render "messages/messages", messages: @messages %>
-	</div>
-<% else %>
+<% unless logged_in? %>
 	<div class="jumbotron">
 		<div class="container">
 			<p class="h3 text-light">BaristaSNSへようこそ</p>
@@ -10,7 +6,7 @@
 			<%= link_to "ユーザー登録", signup_path, class: "btn btn-primary" %>
 		</div>
 	</div>
-	<div class="row">
-		<%= render "messages/messages", messages: @messages %>
-	</div>
 <% end %>
+<div class="row">
+	<%= render "messages/messages", messages: @messages %>
+</div>

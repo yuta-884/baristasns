@@ -9,8 +9,7 @@ Rails.application.routes.draw do
   
   resources :users, except: [:new, :destroy] do
     member do
-      get :followings
-      get :followers
+      get :followings, :followers
     end
   end
   
